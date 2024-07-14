@@ -1,0 +1,6 @@
+/* ViewStickyNotes.css */
+.sticky-notes-container.blur {
+    filter: blur(5px);
+    pointer-events: none;
+  }
+  
