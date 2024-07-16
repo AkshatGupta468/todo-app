@@ -1,7 +1,5 @@
 package com.backend.todolist.model;
 
-import java.util.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -19,7 +17,7 @@ public class Todo {
 
 	private String description;
 	private String username;
-	
+	private boolean favourite;
 	private String tag;
 	
 	protected Todo() {
@@ -31,8 +29,24 @@ public class Todo {
 		this.description = description;
 		this.username = username;
 		this.tag= PredefinedTags.TAGS.get(0);
+		this.favourite = false;
 	}
 
+	public Todo(String title, String description, String username , boolean favourite) {
+		this.title = title;
+		this.description = description;
+		this.username = username;
+		this.tag = PredefinedTags.TAGS.get(0);
+		this.favourite = favourite;
+	}
+
+	public Todo(String title, String description, String username, String tag , boolean favourite) {
+		this.title = title;
+		this.description = description;
+		this.username = username;
+		this.tag = tag;
+		this.favourite = favourite;
+	}
 
 	public long getId() {
 		return id;
@@ -74,4 +88,11 @@ public class Todo {
 		this.tag = tag;
 	}
 
+	public boolean isFavourite() {
+		return favourite;
+	}
+
+	public void setFavourite(boolean isFavourite) {
+		this.favourite = isFavourite;
+	}
 }

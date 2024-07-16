@@ -35,7 +35,7 @@ import io.swagger.annotations.ApiResponses;
 public class TodoController {
 	@Autowired
 	private TodoService todoService;
-	
+
 	@ResponseStatus(code = HttpStatus.CREATED)
 	@RequestMapping(value = "/api/todo", method = RequestMethod.POST)
 	public ResponseEntity<Todo> create(@Valid @RequestBody TodoCreateRequest todoCreateRequest, Principal principal) {
@@ -63,13 +63,28 @@ public class TodoController {
 	
 	@ResponseStatus(code = HttpStatus.OK)
 	@RequestMapping(value = "/api/todo/{pageNumber}/{pageSize}", method = RequestMethod.GET)
-	public ResponseEntity<List<Todo>> readAllPageable(Principal principal, @PathVariable String pageNumber, @PathVariable String pageSize, @RequestParam(required = false) String tag){
-		if(tag != null) {
-			return new ResponseEntity<>(todoService.readAllByTagPageable(principal.getName(), tag, pageNumber, pageSize), HttpStatus.OK);
+	public ResponseEntity<List<Todo>> readAllPageable(Principal principal, @PathVariable String pageNumber, @PathVariable String pageSize, @RequestParam(required = false) String tag, @RequestParam(required = false) Boolean favourite){
+		String username = principal.getName();
+		List<Todo> todos;
+
+		if (tag != null && favourite != null) {
+			// Both tag and favourite are provided
+			todos = todoService.readAllByFavouriteAndTagPageable(username, favourite, tag, pageNumber, pageSize);
+		} else if (tag != null) {
+			// Only tag is provided
+			todos = todoService.readAllByTagPageable(username, tag, pageNumber, pageSize);
+		} else if (favourite != null) {
+			// Only favourite is provided
+			todos = todoService.readAllFavourite(username, pageNumber, pageSize);
+		} else {
+			// Neither tag nor favourite is provided
+			todos = todoService.readAllPageable(username, pageNumber, pageSize);
 		}
-		return new ResponseEntity<>(todoService.readAllPageable(principal.getName(), pageNumber, pageSize), HttpStatus.OK);
+
+		return new ResponseEntity<>(todos, HttpStatus.OK);
 	}
-	
+
+
 	@ResponseStatus(code = HttpStatus.OK)
 	@RequestMapping(value = "/api/todo/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Todo> read(@PathVariable long id, Principal principal) {

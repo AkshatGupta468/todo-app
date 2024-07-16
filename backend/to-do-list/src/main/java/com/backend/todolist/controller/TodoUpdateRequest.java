@@ -10,15 +10,17 @@ public class TodoUpdateRequest {
 	private String title;
 	private String description;
 	private String tag;
+	private Boolean favourite;
 
 	protected TodoUpdateRequest() {
 		
 	}
 
-	public TodoUpdateRequest(String description, String title,String tag) {
+	public TodoUpdateRequest(String description, String title,String tag,Boolean favourite) {
 		this.description = description;
 		this.title = title;
 		this.tag=tag;
+		this.favourite=favourite;
 	}
 
 	public String getTitle() {
@@ -43,5 +45,13 @@ public class TodoUpdateRequest {
 
 	public void setTag(String tag) {
 		this.tag = tag;
+	}
+
+	public Boolean getFavourite() {
+		return favourite;
+	}
+
+	public void setFavourite(Boolean favourite) {
+		this.favourite = favourite;
 	}
 }

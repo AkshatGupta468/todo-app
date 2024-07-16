@@ -11,6 +11,7 @@ public class TodoCreateRequest {
 	private String title;
 	private String description;
 	private String tag;
+	private Boolean favourite;
 	protected TodoCreateRequest() {
 		
 	}
@@ -20,6 +21,14 @@ public class TodoCreateRequest {
 		this.description = description;
 		this.title = title;
 		this.tag= PredefinedTags.TAGS.get(0);
+		this.favourite = false;
+	}
+
+	public TodoCreateRequest(String description, String title, String tag, Boolean favourite ) {
+		this.description = description;
+		this.title = title;
+		this.tag= PredefinedTags.TAGS.get(0);
+		this.favourite = favourite;
 	}
 
 
@@ -46,5 +55,13 @@ public class TodoCreateRequest {
 
 	public void setTag(String tag) {
 		this.tag = tag;
+	}
+
+	public Boolean getFavourite() {
+		return favourite;
+	}
+
+	public void setFavourite(Boolean favourite) {
+		this.favourite = favourite;
 	}
 }

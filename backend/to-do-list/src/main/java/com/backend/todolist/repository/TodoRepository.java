@@ -11,7 +11,8 @@ import com.backend.todolist.model.Todo;
 public interface TodoRepository extends JpaRepository<Todo, Long> {
 	List<Todo> findAllByUsername(String username);
 	List<Todo> findAllByUsernameAndTag(String username,String tag);
-	
+	List<Todo> findAllByUsernameAndFavourite(String username,boolean favourite);
+
 	Todo findByUsernameAndId(String username, long Id);
 	
 	Long countByUsername(String username);

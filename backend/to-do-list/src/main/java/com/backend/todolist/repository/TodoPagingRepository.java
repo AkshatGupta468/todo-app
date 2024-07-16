@@ -12,4 +12,6 @@ import com.backend.todolist.model.Todo;
 public interface TodoPagingRepository extends PagingAndSortingRepository<Todo, Long> {
 	List<Todo> findAllByUsername(String username, Pageable pageable);
 	List<Todo> findAllByUsernameAndTag(String username, String tag, Pageable pageable);
+	List<Todo> findAllByUsernameAndFavourite(String username, boolean favourite, Pageable pageable);
+	List<Todo> findAllByUsernameAndFavouriteAndTag(String username, boolean favourite, String tag, Pageable pageable);
 }

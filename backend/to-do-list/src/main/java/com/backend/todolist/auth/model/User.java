@@ -32,6 +32,8 @@ public class User {
 
     public User(String username, String password) {
 		super();
+        System.out.println(username);
+        System.out.println(password);
 		this.username = username;
 		this.password = password;
 		this.role = "User";
