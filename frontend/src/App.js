@@ -3,8 +3,6 @@ import { Route } from "react-router-dom"
 
 import Header from "./components/header/Header"
 import About from "./components/page/About"
-import Todos from "./components/todo/ViewTodos"
-import AddTodo from "./components/todo/AddTodo"
 import UpdateTodo from "./components/todo/UpdateTodo"
 import Signin from "./components/auth/Signin"
 import Signup from "./components/auth/Signup"

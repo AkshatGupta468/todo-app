@@ -8,7 +8,7 @@ function Signup() {
   const [password, setPassword] = useState("")
   const [message, setMessage] = useState("")
   const [errorMessage, setErrorMessage] = useState("")
-  const { isAuthenticated, setIsAuthenticated }=useContext(AuthContext)
+  const { setIsAuthenticated }=useContext(AuthContext)
   let navigate = useNavigate()
 
   function timeout(delay) {

@@ -11,21 +11,24 @@ const breakpointColumnsObj = {
 };
 
 
-const StickyNoteGrid = ({ notes, onEdit, onDelete }) => {
+const StickyNoteGrid = ({ notes, handleShowEditTodo, onDelete }) => {
   return (
     <Masonry
     breakpointCols={breakpointColumnsObj}
     className="my-masonry-grid"
     columnClassName="my-masonry-grid_column"
     >
-      {notes.map((note, index) => (
+      {notes.map((note, index) => ( 
         <StickyNote
           key={note.id}
-          tag={note.tag}
+          id={note.id}
           title={note.title}
           description={note.description}
-          onEdit={() => onEdit(note.id)}
-          onDelete={() => onDelete(note.id)}
+          tag={note.tag}
+          favourite={note.favourite}
+          
+          handleShowEditTodo={() => handleShowEditTodo(note)}
+          onDelete={() => onDelete(note)}
         />
       ))}
     </Masonry>

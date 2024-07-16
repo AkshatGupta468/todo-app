@@ -3,8 +3,8 @@ import { useNavigate } from "react-router-dom"
 import { AuthContext } from "../../App"
 
 function Signout() {
-  let navigate = useNavigate()
-  const { isAuthenticated, setIsAuthenticated } = useContext(AuthContext)
+  const navigate = useNavigate()
+  const { setIsAuthenticated } = useContext(AuthContext)
   useEffect(() => {
     sessionStorage.removeItem("token")
     sessionStorage.removeItem("name")

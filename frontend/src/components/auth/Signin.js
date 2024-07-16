@@ -9,8 +9,8 @@ function Signin() {
   const [message, setMessage] = useState("")
   const [errorMessage, setErrorMessage] = useState("")
 
-  const {isAuthenticated,setIsAuthenticated}=useContext(AuthContext)
-  let navigate = useNavigate()
+  const {setIsAuthenticated}=useContext(AuthContext)
+  const navigate = useNavigate()
 
   function timeout(delay) {
     return new Promise((res) => setTimeout(res, delay))
