@@ -1,5 +1,6 @@
 package com.backend.todolist.config;
 
+import com.backend.todolist.auth.jwt.JwtTokenFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -11,6 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.backend.todolist.auth.jwt.JwtConfigurer;
 import com.backend.todolist.auth.jwt.JwtTokenGenerator;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @EnableWebSecurity
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
@@ -54,6 +56,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/todo/**").authenticated()
                 .anyRequest().authenticated()
             .and()
-            .apply(new JwtConfigurer(jwtTokenGenerator));
+            .oauth2ResourceServer()
+            .jwt();
     }
 }

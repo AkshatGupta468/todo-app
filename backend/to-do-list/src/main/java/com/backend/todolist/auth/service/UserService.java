@@ -6,6 +6,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,8 @@ import com.backend.todolist.auth.model.User;
 import com.backend.todolist.auth.repository.UserRepository;
 import com.backend.todolist.errorhandler.BadRequestException;
 import com.backend.todolist.event.UserCreatedEvent;
+
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -42,8 +45,8 @@ public class UserService {
 			String username = userSignupRequest.getUsername();
 			String password = userSignupRequest.getPassword();
 
-			User user = userRepository.findByUsername(username);
-			if (user != null) {
+			Optional<User> user = userRepository.findByUsername(username);
+			if (user.isPresent()) {
 				throw new BadRequestException("Username already exists");
 			}
 
@@ -65,9 +68,12 @@ public class UserService {
 		try {
 			String username = userSigninRequest.getUsername();
 			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, userSigninRequest.getPassword()));
-			String token = jwtTokenGenerator.createToken(username, this.userRepository.findByUsername(username).getRoleAsList());
-
-			return new UserSigninResponse(username, token);
+			Optional<User> user = this.userRepository.findByUsername(username);
+			if(user.isPresent()){
+				String token = jwtTokenGenerator.createToken(username, user.get().getRoleAsList());
+				return new UserSigninResponse(username, token);
+			}
+			else throw new UsernameNotFoundException("User doesn't exists");
 		} catch (AuthenticationException e) {
 			throw new BadCredentialsException("Invalid username/password");
 		}

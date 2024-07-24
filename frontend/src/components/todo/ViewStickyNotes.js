@@ -28,6 +28,7 @@ function ViewStickyNotes() {
   };
 
   useEffect(() => {
+    console.log("adsfasdf");
     if (!isAuthenticated) {
       navigate("/");
     }
@@ -41,6 +42,8 @@ function ViewStickyNotes() {
       if (showFavourite) params = { ...params, favourite: true };
       try {
         let url = `http://localhost:3001/api/todo/${pageNumber - 1}/${pageSize}`;
+        console.log("asdfasdf")
+        console.log(sessionStorage.getItem('token'))
         response = await axios.get(url, {
           params: params,
           headers: { 'Authorization': `Bearer ${sessionStorage.getItem('token')}` },

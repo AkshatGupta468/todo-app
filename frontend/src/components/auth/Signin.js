@@ -2,6 +2,11 @@ import React, { useEffect, useState, useContext } from "react"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import { AuthContext } from "../../App"
+import { GoogleOAuthProvider } from '@react-oauth/google';
+import { GoogleLogin } from "@react-oauth/google";
+
+const clientId = "271988363729-cu7gl4buuaju8l8e8v3gblb66l8b6vuh.apps.googleusercontent.com"
+
 
 function Signin() {
   const [username, setUsername] = useState("")
@@ -15,6 +20,17 @@ function Signin() {
   function timeout(delay) {
     return new Promise((res) => setTimeout(res, delay))
   }
+  const handleLoginSuccess = async (response) => {
+    const token = response.credential;
+    console.log(response)
+    sessionStorage.setItem('token', token);
+    setIsAuthenticated(true)
+    navigate("/")
+};
+
+const handleLoginFailure = (response) => {
+    console.error("Google Login Failed:", response);
+};
 
   const onSubmit = async (e) => {
     e.preventDefault()
@@ -98,8 +114,18 @@ function Signin() {
         </div>
         <button className="btn btn-primary">Sign In</button>
       </form>
+      <GoogleOAuthProvider clientId={clientId}>
+            <div>
+                <h2>Login with Google</h2>
+                <GoogleLogin
+                  onSuccess={handleLoginSuccess}
+                  onFailure={handleLoginFailure}
+                />
+            </div>
+        </GoogleOAuthProvider>
       {showMessage()}
       {showErrorMessage()}
+
     </div>
   )
 }

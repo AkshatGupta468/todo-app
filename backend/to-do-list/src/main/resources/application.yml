@@ -1,0 +1,9 @@
+server:
+  port: 3001
+
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: https://accounts.google.com
